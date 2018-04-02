@@ -42,47 +42,44 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 migrations_dir = os.path.join(current_dir,migrations)
 
 if __name__ == '__main__':
-    print(current_dir)
-    print(migrations_dir)
-
-    list_dir = os.listdir(migrations_dir)
-    list_dir_sql = []
-    list_filter = []
-
-
-    def last_point(a, b):
-        if a == 1:
-            print(b)
-
-
-    def open_filter_list(list_1, list_2, filter):
-        for sql in list_1:
-            with open(os.path.join(os.path.dirname(__file__), migrations, sql), encoding='utf-8') as f:
-                if filter in f.read():
-                    list_2.append(sql)
-        print(len(list_2))
-        list_1.clear()
-        last_point(len(list_2), list_2)
-
-
-    for sql in list_dir:
-        if sql.endswith('.sql'):
-            list_dir_sql.append(sql)
-
-
-    def sql_filter(list, list_filter, filter):
-        if len(list) > 0:
-            open_filter_list(list, list_filter, filter)
-        else:
-            open_filter_list(list_filter, list, filter)
-
-
-    while True:
-        filter = input('Filter:')
-        if not filter:
-            break
-        sql_filter(list_dir_sql, list_filter, filter)
     pass
+
+print(current_dir)
+print(migrations_dir)
+
+list_dir = os.listdir(migrations_dir)
+entry_list = []
+list_filter = []
+
+for sql in list_dir:
+    if sql.endswith('.sql'):
+        entry_list.append(sql)
+
+
+def last_point(len_output_list, last_sql_file):
+    if len_output_list == 1:
+        print('Остался один файл с именем', last_sql_file)
+
+
+def open_filter_list(container_list, word):
+    output_list = []
+    for sql in container_list:
+        with open(os.path.join(os.path.dirname(__file__), migrations, sql), encoding='utf-8') as f:
+            if word in f.read():
+                output_list.append(sql)
+    print('кол-во файлов с этим словом', len(output_list))
+    print('\n'.join(output_list))
+    last_point(len(output_list), output_list)
+    return output_list
+
+
+while True:
+    word = input('Filter:')
+    if not word:
+        break
+    entry_list = open_filter_list(entry_list, word)
+
+
 
 
 
