@@ -37,24 +37,6 @@
 
 import os
 
-migrations = 'Migrations'
-current_dir = os.path.dirname(os.path.abspath(__file__))
-migrations_dir = os.path.join(current_dir,migrations)
-
-if __name__ == '__main__':
-    pass
-
-print(current_dir)
-print(migrations_dir)
-
-list_dir = os.listdir(migrations_dir)
-entry_list = []
-list_filter = []
-
-for sql in list_dir:
-    if sql.endswith('.sql'):
-        entry_list.append(sql)
-
 
 def last_point(len_output_list, last_sql_file):
     if len_output_list == 1:
@@ -68,16 +50,31 @@ def open_filter_list(container_list, word):
             if word in f.read():
                 output_list.append(sql)
     print('кол-во файлов с этим словом', len(output_list))
-    print('\n'.join(output_list))
+    # print('\n'.join(output_list))
+    for out in output_list:
+        print(out)
     last_point(len(output_list), output_list)
     return output_list
 
+if __name__ == '__main__':
+    migrations = 'Migrations'
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    migrations_dir = os.path.join(current_dir,migrations)
+    print(current_dir)
+    print(migrations_dir)
+    list_dir = os.listdir(migrations_dir)
+    entry_list = []
+    list_filter = []
 
-while True:
-    word = input('Filter:')
-    if not word:
-        break
-    entry_list = open_filter_list(entry_list, word)
+    for sql in list_dir:
+        if sql.endswith('.sql'):
+            entry_list.append(sql)
+
+    while True:
+        word = input('Filter:')
+        if not word:
+            break
+        entry_list = open_filter_list(entry_list, word)
 
 
 
